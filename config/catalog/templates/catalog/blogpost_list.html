@@ -1,0 +1,33 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<div class="row text-center">
+    <div class="col-12">
+        <div class="card mb-4 box-shadow">
+            <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                <h1 class="display-4">Electrostore</h1>
+                <p class="lead">Electrostore - лучший магазин электроники</p>
+            </div>
+            <div class="col-12">
+                <a href="{% url 'catalog:create_blogpost' %}"
+                   class="btn btn-sm btn-outline-secondary">Create post</a>
+            </div>
+            {% for object in object_list %}
+                <div class="card-body">
+                    <h4 class="card-title pricing-card-title">{{ object.title }}</h4>
+                    <p>{{ object.content}}</p>
+                    <p>Просмотры: {{ object.number_of_views}}</p>
+                    <div class="btn-group">
+                        <a href="{% url 'catalog:blogpost' object.slug %}"
+                            class="btn btn-sm btn-outline-secondary" type="button">View</a>
+                        <a href="{% url 'catalog:update_blogpost' object.slug %}"
+                            class="btn btn-sm btn-outline-secondary" type="button">Edit</a>
+                        <a href="{% url 'catalog:delete_blogpost' object.slug %}"
+                            class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
