@@ -1,0 +1,37 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="card-body">
+    <h3 class="card-title pricing-card-title">{{ object.name }}</h3>
+    <p><b>Цена: {{ object.price }} рублей</b></p>
+    <p>{{ object.description }}</p>
+    <img src="{% mediapath object.preview %}" />
+    {% if versions %}
+        <p><h4>Версии: </h4></p>
+        <p>
+            {% for version in versions %}
+                {{ version.version_number }}
+                {% if version.version_name %}
+                    : {{ version.version_name }}
+                {% endif %}
+                {% if forloop.last == 0 %}
+                    <br>
+                {% endif %}
+            {% endfor %}
+        </p>
+    {% endif %}
+</div>
+<div class="card-footer">
+    <div class="btn-group">
+        <a href="{% url 'catalog:update_product' object.pk %}"
+           class="btn btn-sm btn-outline-secondary" type="button">Edit</a>
+        <a href="{% url 'catalog:delete_product' object.pk %}"
+           class="btn btn-sm btn-outline-secondary" type="button">Delete</a>
+    </div>
+    <p class="mt-20">
+        {% if object.user.email %}
+            Создатель: {{ object.user.email }}
+        {% endif %}
+    </p>
+</div>
+{% endblock %}
